@@ -1,34 +1,16 @@
-import fs from "fs";
-import path from "path";
-import samplesteps from "./samplestep.js";
+#!/usr/bin/env node
 
-const __dirname = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Za-z]:)/, '$1');
-const baseDir = path.join(__dirname, "test");
+import { Command } from 'commander';
+// import { samplesteps } from "./samplestep.js";
 
-if(!fs.existsSync(baseDir)){
-  fs.mkdirSync(baseDir);
-}
-const createFilesFromSteps = (steps) => {
-  steps.forEach((step) => {
-    if (step.path) {
-      const fullPath = path.join(baseDir, step.path);
-      const dir = path.dirname(fullPath);
-      const filePath = fullPath;
-
-      if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
-        console.log(`Directory created: ${dir}`);
-      }
-
-      if (step.code) {
-        fs.writeFileSync(filePath, step.code);
-        console.log(`File created: ${filePath}`);
-      } else {
-        fs.writeFileSync(filePath, "");
-        console.log(`Empty file created: ${filePath}`);
-      }
+const program = new Command();
+program
+  .name("cli-2improv")
+  .option('-p <prompt>', 'prompt for generating files')
+  .action((options) => {
+    if (options.prompt) {
+      console.log(options.prompt);
     }
   });
-};
 
-createFilesFromSteps(samplesteps);
+  program.parse(process.argv);

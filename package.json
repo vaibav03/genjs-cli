@@ -7,10 +7,17 @@
     "dev": "node ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "template-cli": "./src/index.js"
+  },
   "author": "Vaibav",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "commander": "^13.0.0",
     "prettier": "3.4.2"
+  },
+  "dependencies": {
+    "@babel/core": "^7.26.0"
   }
 }
