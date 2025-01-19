@@ -1,0 +1,16 @@
+{
+  "name": "cli-2improv",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node ./src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vaibav",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "prettier": "3.4.2"
+  }
+}
