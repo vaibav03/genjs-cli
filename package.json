@@ -18,6 +18,7 @@
     "prettier": "3.4.2"
   },
   "dependencies": {
-    "@babel/core": "^7.26.0"
+    "@babel/core": "^7.26.0",
+    "inquirer": "^12.3.2"
   }
 }

@@ -1,16 +1,22 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-// import { samplesteps } from "./samplestep.js";
+import Inquirer from 'inquirer';
 
 const program = new Command();
+
 program
-  .name("cli-2improv")
-  .option('-p <prompt>', 'prompt for generating files')
-  .action((options) => {
-    if (options.prompt) {
-      console.log(options.prompt);
-    }
+  .command("init")
+  .action(() => {
+    Inquirer.prompt([
+      {
+        type: 'input',
+        name: 'name',
+        message: 'Enter your Prompt'
+      }
+    ]).then(answers => {
+      
+    });
   });
 
-  program.parse(process.argv);
+program.parse(process.argv);
