@@ -66,7 +66,7 @@ export function parseXml(response) {
   return steps;
 }
 
-import { exec } from 'child_process';
+import { exec } from "child_process";
 /*
  * Parse input XML and convert it into response.
  * Eg: Input -
@@ -96,14 +96,14 @@ import { exec } from 'child_process';
  * The input can have strings in the middle they need to be ignored
  */
 
-
-import fs from 'fs';
-import path from 'path';
-
+import fs from "fs";
+import path from "path";
 
 export const createFiles = (response) => {
   const steps = parseXml(response);
-  const __dirname = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Za-z]:)/, '$1');
+  const __dirname = path
+    .dirname(new URL(import.meta.url).pathname)
+    .replace(/^\/([A-Za-z]:)/, "$1");
   const baseDir = path.join(__dirname, "test");
 
   if (!fs.existsSync(baseDir)) {

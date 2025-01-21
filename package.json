@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.26.0",
+    "axios": "^1.7.9",
     "inquirer": "^12.3.2"
   }
 }
