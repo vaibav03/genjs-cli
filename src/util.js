@@ -66,8 +66,9 @@ export function parseXml(response) {
   return steps;
 }
 
+import { exec } from 'child_process';
 /*
- * Parse input XML and convert it into steps.
+ * Parse input XML and convert it into response.
  * Eg: Input -
  * <boltArtifact id=\"project-import\" title=\"Project Files\">
  *  <boltAction type=\"file\" filePath=\"eslint.config.js\">
@@ -100,17 +101,18 @@ import fs from 'fs';
 import path from 'path';
 
 
-export const createFilesFromSteps = (steps) => {
+export const createFiles = (response) => {
+  const steps = parseXml(response);
   const __dirname = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Za-z]:)/, '$1');
-const baseDir = path.join(__dirname, "test");
+  const baseDir = path.join(__dirname, "test");
 
-if(!fs.existsSync(baseDir)){
-  fs.mkdirSync(baseDir);
-}
+  if (!fs.existsSync(baseDir)) {
+    fs.mkdirSync(baseDir);
+  }
   steps.forEach((step) => {
     if (step.path) {
       const fullPath = path.join(baseDir, step.path);
-      const dir = path.dirname(fullPath); 
+      const dir = path.dirname(fullPath);
       const filePath = fullPath;
 
       if (!fs.existsSync(dir)) {
@@ -124,6 +126,27 @@ if(!fs.existsSync(baseDir)){
       } else {
         fs.writeFileSync(filePath, "");
         console.log(`Empty file created: ${filePath}`);
+      }
+    } else if (step.type === "RunScript") {
+      try {
+        console.log(`Running script: ${step.code}`);
+        const command = step.code.split("&&");
+        command.forEach((cmd) => {
+          exec(cmd, { cwd: baseDir }, (error, stdout, stderr) => {
+            if (error) {
+              console.error(`Error: ${error.message}`);
+              return;
+            }
+            if (stderr) {
+              console.error(`stderr: ${stderr}`);
+              return;
+            }
+            console.log(`stdout: ${stdout}`);
+          });
+        });
+        console.log("Script executed");
+      } catch (error) {
+        console.error(`Failed to execute script: ${error.message}`);
       }
     }
   });
