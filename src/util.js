@@ -151,3 +151,11 @@ export const createFiles = (response) => {
     }
   });
 };
+
+export const clearFiles = () => {
+  const __dirname = path.dirname(new URL(import.meta.url).pathname)
+    .replace(/^\/([A-Za-z]:)/, "$1");
+  const baseDir = path.join(__dirname, "test");
+  // fs.rmdirSync(__dirname, { recursive: true });
+  console.log(`Directory deleted: ${__dirname}`);
+}
