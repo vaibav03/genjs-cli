@@ -1,6 +1,6 @@
 import { BASE_PROMPT, getSystemPrompt } from "./prompts.js";
 import { basePrompt as nodeBasePrompt } from "./defaults/node.js";
-import { basePrompt as ReactBasePrompt } from "./defaults/react.js";
+import { basePrompt as reactBasePrompt } from "./defaults/react.js";
 import Anthropic from '@anthropic-ai/sdk';
 import { createFiles } from "../util.js";
 export async function template(prompt, anthropic) {
@@ -15,6 +15,7 @@ export async function template(prompt, anthropic) {
     })
 
     const answer = (response.content[0]).text;
+    // console.log("Answer from template",answer);
     if (answer == "react") {
       return {
         prompts: [BASE_PROMPT, `Here is an artifact that contains all files of the project visible to you.\nConsider the contents of ALL files in the project.\n\n${reactBasePrompt}\n\nHere is a list of files that exist on the file system but are not being shown to you:\n\n  - .gitignore\n  - package-lock.json\n`],
@@ -30,8 +31,7 @@ export async function template(prompt, anthropic) {
     }
     return { message: "The template only supports 'react' or 'node' for now!!" };
   } catch (e) {
-    const message = e?.error?.error?.message;
-    return { message: message };
+    return { message: e };
   }
 
 }
@@ -45,7 +45,7 @@ export async function filesfromAPI(messages, anthropic) {
       system: getSystemPrompt()
     })
 
-    console.log(response);
+   // console.log(response);
     return {
       response: (response.content[0])?.text
     };
@@ -65,6 +65,7 @@ export async function initCommand(answers) {
     });
 
     const response = await template(prompt, anthropic);
+    console.log("Response for template",response);
     if (response?.message) return console.log(response.message);
     const { prompts, uiPrompts } = response;
     createFiles(uiPrompts[0]);
@@ -73,7 +74,7 @@ export async function initCommand(answers) {
       role: "user",
       content,
     })), anthropic);
-    console.log(stepsResponse);
-    // createFiles(stepsResponse.response);
+    // console.log(stepsResponse);
+     createFiles(stepsResponse.response);
   }
 }
