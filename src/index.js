@@ -35,14 +35,17 @@ program.command("init").action(() => {
 
     const response = await template(prompt, anthropic);
     if (response?.message) return console.log(response.message);
-
     const { prompts, uiPrompts } = response;
     createFiles(uiPrompts[0]);
+
     const stepsResponse = await filesfromAPI([...prompts, prompt].map((content) => ({
       role: "user",
       content,
     })), anthropic);
+    
+    if(stepsResponse?.message) return console.log(stepsResponse.message);
     createFiles(stepsResponse.response);
+
   });
 });
 

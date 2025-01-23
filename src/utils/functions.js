@@ -34,6 +34,21 @@ export async function template(prompt, anthropic) {
 
 }
 
-export async function filesfromAPI(prompt, anthropic) {
-  return null;
+export async function filesfromAPI(messages, anthropic) {
+  try {
+  const response = await anthropic.messages.create({
+    messages: messages,
+    model: 'claude-3-5-sonnet-20241022',
+    max_tokens: 8000,
+    system: getSystemPrompt()
+  })
+
+  console.log(response);
+  return {
+    response: (response.content[0])?.text
+  };
+  }catch(e){
+    const message = e?.error?.error?.message;
+    return { message: message };
+  }
 }
