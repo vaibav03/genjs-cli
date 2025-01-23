@@ -1,6 +1,8 @@
 import { BASE_PROMPT, getSystemPrompt } from "./prompts.js";
 import { basePrompt as nodeBasePrompt } from "./defaults/node.js";
 import { basePrompt as ReactBasePrompt } from "./defaults/react.js";
+import Anthropic from "@anthropic-ai/sdk";
+
 export async function template(prompt, anthropic) {
   try {
     const response = await anthropic.messages.create({
@@ -36,19 +38,42 @@ export async function template(prompt, anthropic) {
 
 export async function filesfromAPI(messages, anthropic) {
   try {
-  const response = await anthropic.messages.create({
-    messages: messages,
-    model: 'claude-3-5-sonnet-20241022',
-    max_tokens: 8000,
-    system: getSystemPrompt()
-  })
+    const response = await anthropic.messages.create({
+      messages: messages,
+      model: 'claude-3-5-sonnet-20241022',
+      max_tokens: 8000,
+      system: getSystemPrompt()
+    })
 
-  console.log(response);
-  return {
-    response: (response.content[0])?.text
-  };
-  }catch(e){
+    console.log(response);
+    return {
+      response: (response.content[0])?.text
+    };
+  } catch (e) {
     const message = e?.error?.error?.message;
     return { message: message };
+  }
+}
+
+export async function initCommand(answers) {
+  if (answers.api_key && answers.prompt) {
+    const prompt = answers.prompt.trim();
+    const api_key = answers.api_key;
+    const anthropic = new Anthropic({
+      apiKey: api_key,
+    });
+
+    const response = await template(prompt, anthropic);
+    if (response?.message) return console.log(response.message);
+    const { prompts, uiPrompts } = response;
+    createFiles(uiPrompts[0]);
+
+    const stepsResponse = await filesfromAPI([...prompts, prompt].map((content) => ({
+      role: "user",
+      content,
+    })), anthropic);
+
+    if (stepsResponse?.message) return console.log(stepsResponse.message);
+    createFiles(stepsResponse.response);
   }
 }

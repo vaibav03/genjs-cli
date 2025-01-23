@@ -4,7 +4,7 @@ import { Command } from "commander";
 import Inquirer from "inquirer";
 import axios from "axios";
 import { parseXml, createFiles, clearFiles } from "./util.js";
-import { template, filesfromAPI } from "./utils/functions.js";
+import { template, filesfromAPI, initCommand } from "./utils/functions.js";
 import Anthropic from "@anthropic-ai/sdk";
 import { BASE_PROMPT, getSystemPrompt } from "./utils/prompts.js";
 import { basePrompt as nodeBasePrompt } from "./utils/defaults/node.js";
@@ -27,29 +27,11 @@ program.command("init").action(() => {
     },
   ]).then(async (answers) => {
 
-    const prompt = answers.prompt.trim();
-    const api_key = answers.api_key;
-    const anthropic = new Anthropic({
-      apiKey: api_key,
-    });
-
-    const response = await template(prompt, anthropic);
-    if (response?.message) return console.log(response.message);
-    const { prompts, uiPrompts } = response;
-    createFiles(uiPrompts[0]);
-
-    const stepsResponse = await filesfromAPI([...prompts, prompt].map((content) => ({
-      role: "user",
-      content,
-    })), anthropic);
-    
-    if(stepsResponse?.message) return console.log(stepsResponse.message);
-    createFiles(stepsResponse.response);
-
+    await initCommand(answers);
+    return;
   });
 });
 
-let api = null;
 program
   .command('configset')
   .option('-k, --api_key <api_key>', 'Set API Key')
