@@ -69,16 +69,17 @@ import { exec } from "child_process";
 
 import fs from "fs";
 import path from "path";
-
+import process from "process";
 export const createFiles = (response) => {
   const steps = parseXml(response);
   const __dirname = path
-    .dirname(new URL(import.meta.url).pathname)
-    .replace(/^\/([A-Za-z]:)/, "$1");
-  const baseDir = path.join(__dirname,"test");
+    .dirname(new URL(process.cwd()).pathname)
+    
+  const baseDir = path.join(__dirname, "test");
 
   if (!fs.existsSync(baseDir)) {
     fs.mkdirSync(baseDir);
+    return console.log(`Directory created: ${baseDir}`);
   }
   steps.forEach((step) => {
     if (step.path) {

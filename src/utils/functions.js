@@ -3,6 +3,8 @@ import { basePrompt as nodeBasePrompt } from "./defaults/node.js";
 import { basePrompt as reactBasePrompt } from "./defaults/react.js";
 import Anthropic from '@anthropic-ai/sdk';
 import { createFiles } from "../util.js";
+import { createSpinner } from 'nanospinner'
+
 export async function template(prompt, anthropic) {
   try {
     const response = await anthropic.messages.create({
@@ -45,7 +47,7 @@ export async function filesfromAPI(messages, anthropic) {
       system: getSystemPrompt()
     })
 
-   // console.log(response);
+    // console.log(response);
     return {
       response: (response.content[0])?.text
     };
@@ -65,16 +67,17 @@ export async function initCommand(answers) {
     });
 
     const response = await template(prompt, anthropic);
-    console.log("Response for template",response);
+    console.log("Response for template", response);
     if (response?.message) return console.log(response.message);
     const { prompts, uiPrompts } = response;
     createFiles(uiPrompts[0]);
-
+    const spinner = createSpinner('Fetching Files from Anthropic API').start()
     const stepsResponse = await filesfromAPI([...prompts, prompt].map((content) => ({
       role: "user",
       content,
     })), anthropic);
+    spinner.success();
     // console.log(stepsResponse);
-     createFiles(stepsResponse.response);
+    createFiles(stepsResponse.response);
   }
 }
