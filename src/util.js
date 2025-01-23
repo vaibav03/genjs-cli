@@ -51,7 +51,6 @@ export function parseXml(response) {
         path: filePath,
       });
     } else if (type === "shell") {
-      // Shell command step
       steps.push({
         id: stepId++,
         title: "Run command",
@@ -67,34 +66,6 @@ export function parseXml(response) {
 }
 
 import { exec } from "child_process";
-/*
- * Parse input XML and convert it into response.
- * Eg: Input -
- * <boltArtifact id=\"project-import\" title=\"Project Files\">
- *  <boltAction type=\"file\" filePath=\"eslint.config.js\">
- *      import js from '@eslint/js';\nimport globals from 'globals';\n
- *  </boltAction>
- * <boltAction type="shell">
- *      node index.js
- * </boltAction>
- * </boltArtifact>
- *
- * Output -
- * [{
- *      title: "Project Files",
- *      status: "Pending"
- * }, {
- *      title: "Create eslint.config.js",
- *      type: StepType.CreateFile,
- *      code: "import js from '@eslint/js';\nimport globals from 'globals';\n"
- * }, {
- *      title: "Run command",
- *      code: "node index.js",
- *      type: StepType.RunScript
- * }]
- *
- * The input can have strings in the middle they need to be ignored
- */
 
 import fs from "fs";
 import path from "path";
@@ -152,10 +123,46 @@ export const createFiles = (response) => {
   });
 };
 
+import process from "process";
+// export async function clearFiles () {
+//   const dir = process.cwd();
+
+//   fs.rmdir(dir, err => {
+//     if (err) {
+//       throw err;
+//     }
+//     console.log(`${dir} is deleted!`);
+//   });
+
+// };
+
+
 export const clearFiles = () => {
-  const __dirname = path.dirname(new URL(import.meta.url).pathname)
-    .replace(/^\/([A-Za-z]:)/, "$1");
-  const baseDir = path.join(__dirname, "test");
-  // fs.rmdirSync(__dirname, { recursive: true });
-  console.log(`Directory deleted: ${__dirname}`);
-}
+  const dir = process.cwd();
+  console.log(`Attempting to clear: ${dir}`);
+
+  try {
+    const files = fs.readdirSync(dir);
+
+    files.forEach((file) => {
+      const filePath = path.join(dir, file);
+      const stats = fs.statSync(filePath);
+
+      if (stats.isDirectory()) {
+        fs.rmSync(filePath, { recursive: true, force: true });
+      } else {
+        fs.unlinkSync(filePath);
+      }
+    });
+
+    console.log("All files deleted successfully.");
+  } catch (error) {
+    if (error.code === "EBUSY") {
+      console.error(
+        `The directory or file is busy or locked: ${error.path}. Ensure no other process is using it and try again.`
+      );
+    } else {
+      console.error(`Error deleting files: ${error.message}`);
+    }
+  }
+};

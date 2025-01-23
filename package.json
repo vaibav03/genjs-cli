@@ -15,11 +15,15 @@
   "description": "",
   "devDependencies": {
     "commander": "^13.0.0",
-    "prettier": "3.4.2"
+    "prettier": "3.4.2",
+    "rimraf": "^6.0.1"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.35.0",
     "@babel/core": "^7.26.0",
     "axios": "^1.7.9",
+    "ds": "^2.0.2",
+    "fs": "^0.0.1-security",
     "inquirer": "^12.3.2"
   }
 }
