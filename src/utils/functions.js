@@ -56,8 +56,14 @@ export async function filesfromAPI(messages, anthropic) {
     return { message: message };
   }
 }
-
+import {LocalStorage} from "node-localstorage";
+const localStorage = new LocalStorage('./scratch');
+export { localStorage };
 export async function initCommand(answers) {
+  if(!localStorage.getItem["api_key"])
+  localStorage.setItem("api_key", answers.api_key);
+
+  console.log(localStorage.getItem("api_key"));
 
   if (answers.api_key && answers.prompt) {
     const prompt = answers.prompt.trim();
@@ -72,7 +78,7 @@ export async function initCommand(answers) {
     const { prompts, uiPrompts } = response;
     createFiles(uiPrompts[0]);
     const spinner = createSpinner('Fetching Files from Anthropic API').start();
-    cache.set("api_key", api_key);
+    
     const stepsResponse = await filesfromAPI([...prompts, prompt].map((content) => ({
       role: "user",
       content,
