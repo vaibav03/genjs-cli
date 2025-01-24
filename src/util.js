@@ -1,3 +1,8 @@
+import { exec } from "child_process";
+import fs from "fs";
+import path from "path";
+import process from "process";
+
 const StepType = {
   CreateFolder: "CreateFolder",
   CreateFile: "CreateFile",
@@ -65,16 +70,10 @@ export function parseXml(response) {
   return steps;
 }
 
-import { exec } from "child_process";
 
-import fs from "fs";
-import path from "path";
-import process from "process";
 export const createFiles = (response) => {
   const steps = parseXml(response);
-  const __dirname = path
-    .dirname(new URL(process.cwd()).pathname)
-    
+  const __dirname = (new URL(process.cwd()).pathname)
   const baseDir = path.join(__dirname, "test");
 
   if (!fs.existsSync(baseDir)) {
@@ -123,19 +122,6 @@ export const createFiles = (response) => {
     }
   });
 };
-
-import process from "process";
-// export async function clearFiles () {
-//   const dir = process.cwd();
-
-//   fs.rmdir(dir, err => {
-//     if (err) {
-//       throw err;
-//     }
-//     console.log(`${dir} is deleted!`);
-//   });
-
-// };
 
 
 export const clearFiles = () => {
