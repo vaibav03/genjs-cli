@@ -71,13 +71,13 @@ export async function initCommand(answers) {
     if (response?.message) return console.log(response.message);
     const { prompts, uiPrompts } = response;
     createFiles(uiPrompts[0]);
-    const spinner = createSpinner('Fetching Files from Anthropic API').start()
+    const spinner = createSpinner('Fetching Files from Anthropic API').start();
+    cache.set("api_key", api_key);
     const stepsResponse = await filesfromAPI([...prompts, prompt].map((content) => ({
       role: "user",
       content,
     })), anthropic);
     spinner.success();
-    // console.log(stepsResponse);
     createFiles(stepsResponse.response);
   }
 }

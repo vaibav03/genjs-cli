@@ -103,7 +103,7 @@ export const createFiles = (response) => {
         console.log(`Running script: ${step.code}`);
         const command = step.code.split("&&");
         command.forEach((cmd) => {
-          exec(cmd, { cwd: baseDir }, (error, stdout, stderr) => {
+          exec(cmd, { cwd: process.cwd() }, (error, stdout, stderr) => {
             if (error) {
               console.error(`Error: ${error.message}`);
               return;
