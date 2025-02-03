@@ -11,14 +11,13 @@ import { basePrompt as reactBasePrompt } from "./utils/defaults/react.js";
 import { localStorage } from "./utils/functions.js";
 
 const program = new Command();
-program.name("cli-ai").version("1.0.0");
+program.name("genJS").version("1.0.0");
 
 program.command("init").option('-a, --api_key <api_key>', 'Set API Key').option('-p, --prompt <prompt...>', 'Set Prompt').
   action((actions) => {
     if ((actions.api_key || localStorage.getItem("api_key")) && actions.prompt) {
       if (localStorage.getItem("api_key"))
         actions.api_key = localStorage.getItem("api_key");
-
       actions.prompt = actions.prompt.join(' ');
       return initCommand(actions);
     }
@@ -57,4 +56,7 @@ program.command('clear').action(() => {
   });
 })
 
+program.command("test").action(() => {
+  createFiles(nodeBasePrompt);
+})
 program.parse(process.argv);

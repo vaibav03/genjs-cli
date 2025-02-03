@@ -20,14 +20,14 @@ export async function template(prompt, anthropic) {
     // console.log("Answer from template",answer);
     if (answer == "react") {
       return {
-        prompts: [BASE_PROMPT, `Here is an artifact that contains all files of the project visible to you.\nConsider the contents of ALL files in the project.\n\n${reactBasePrompt}\n\nHere is a list of files that exist on the file system but are not being shown to you:\n\n  - .gitignore\n  - package-lock.json\n`],
+        prompts: [BASE_PROMPT, `Here is an artifact that contains all files of the project visible to you.\nConsider the contents of ALL files in the project.\n\n${reactBasePrompt}. IMPORTANT: BUT IN CASE THE PROMPT, ASKS FOR A DIFFERENT TECH STACK FEEL FREE TO OVERWRITE FILES  \n\nHere is a list of files that exist on the file system but are not being shown to you: Feel free to overwrite any files if necessary.\n\n  - .gitignore\n  - package-lock.json\n`],
         uiPrompts: [reactBasePrompt]
       };
     }
 
     if (answer === "node") {
       return {
-        prompts: [`Here is an artifact that contains all files of the project visible to you.\nConsider the contents of ALL files in the project.\n\n${reactBasePrompt}\n\nHere is a list of files that exist on the file system but are not being shown to you:\n\n  - .gitignore\n  - package-lock.json\n`],
+        prompts: [`Here is an artifact that contains all files of the project visible to you.\nConsider the contents of ALL files in the project.\n\n${nodeBasePrompt}\n\nHere is a list of files that exist on the file system but are not being shown to you: Feel free to overwrite any files if necessary.\n\n  - .gitignore\n  - package-lock.json\n`],
         uiPrompts: [nodeBasePrompt]
       };
     }
@@ -56,15 +56,10 @@ export async function filesfromAPI(messages, anthropic) {
     return { message: message };
   }
 }
-import {LocalStorage} from "node-localstorage";
-const localStorage = new LocalStorage('./scratch');
+import { LocalStorage } from "node-localstorage";
+const localStorage = new LocalStorage('./api_key');
 export { localStorage };
 export async function initCommand(answers) {
-  if(!localStorage.getItem["api_key"])
-  localStorage.setItem("api_key", answers.api_key);
-
-  console.log(localStorage.getItem("api_key"));
-
   if (answers.api_key && answers.prompt) {
     const prompt = answers.prompt.trim();
     const api_key = answers.api_key;
@@ -73,17 +68,19 @@ export async function initCommand(answers) {
     });
 
     const response = await template(prompt, anthropic);
-    console.log("Response for template", response);
     if (response?.message) return console.log(response.message);
     const { prompts, uiPrompts } = response;
     createFiles(uiPrompts[0]);
     const spinner = createSpinner('Fetching Files from Anthropic API').start();
-    
+    if (!localStorage.getItem["api_key"])
+      localStorage.setItem("api_key", answers.api_key);
     const stepsResponse = await filesfromAPI([...prompts, prompt].map((content) => ({
       role: "user",
       content,
     })), anthropic);
     spinner.success();
+    const spinner1 = createSpinner('Creating Files in your Directory').start();
     createFiles(stepsResponse.response);
+    spinner1.success();
   }
 }

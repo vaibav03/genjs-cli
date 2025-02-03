@@ -8,13 +8,14 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "template-cli": "./src/index.js"
+    "genJS": "./src/index.js"
   },
   "author": "Vaibav",
   "license": "ISC",
   "description": "",
   "devDependencies": {
     "commander": "^13.0.0",
+    "nanospinner": "^1.2.2",
     "prettier": "3.4.2",
     "rimraf": "^6.0.1"
   },
@@ -24,6 +25,8 @@
     "axios": "^1.7.9",
     "ds": "^2.0.2",
     "fs": "^0.0.1-security",
-    "inquirer": "^12.3.2"
+    "inquirer": "^12.3.2",
+    "node-cache": "^5.1.2",
+    "node-localstorage": "^3.0.5"
   }
 }
