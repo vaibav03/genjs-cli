@@ -66,10 +66,9 @@ export function parseXml(response) {
   return steps;
 }
 
-
 export const createFiles = (response) => {
   const steps = parseXml(response);
-  const __dirname = (new URL(process.cwd()).pathname)
+  const __dirname = new URL(process.cwd()).pathname;
   const baseDir = path.join(__dirname, "test");
 
   if (!fs.existsSync(baseDir)) {
@@ -101,7 +100,6 @@ export const createFiles = (response) => {
   });
 };
 
-
 export const clearFiles = () => {
   const dir = process.cwd();
   const spinner = createSpinner("Clearing files...").start();
@@ -121,7 +119,7 @@ export const clearFiles = () => {
   } catch (error) {
     if (error.code === "EBUSY") {
       console.error(
-        `The directory or file is busy or locked: ${error.path}. Ensure no other process is using it and try again.`
+        `The directory or file is busy or locked: ${error.path}. Ensure no other process is using it and try again.`,
       );
     } else {
       console.error(`Error deleting files: ${error.message}`);

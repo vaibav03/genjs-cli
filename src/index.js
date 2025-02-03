@@ -13,12 +13,18 @@ import { localStorage } from "./utils/functions.js";
 const program = new Command();
 program.name("genJS").version("1.0.0");
 
-program.command("init").option('-a, --api_key <api_key>', 'Set API Key').option('-p, --prompt <prompt...>', 'Set Prompt').
-  action((actions) => {
-    if ((actions.api_key || localStorage.getItem("api_key")) && actions.prompt) {
+program
+  .command("init")
+  .option("-a, --api_key <api_key>", "Set API Key")
+  .option("-p, --prompt <prompt...>", "Set Prompt")
+  .action((actions) => {
+    if (
+      (actions.api_key || localStorage.getItem("api_key")) &&
+      actions.prompt
+    ) {
       if (localStorage.getItem("api_key"))
         actions.api_key = localStorage.getItem("api_key");
-      actions.prompt = actions.prompt.join(' ');
+      actions.prompt = actions.prompt.join(" ");
       return initCommand(actions);
     }
 
@@ -26,8 +32,9 @@ program.command("init").option('-a, --api_key <api_key>', 'Set API Key').option(
       {
         type: "input",
         name: "api_key",
-        message: "Enter your Anthropic API Key (if aleady entered then press enter)",
-        default: localStorage.getItem("api_key")
+        message:
+          "Enter your Anthropic API Key (if aleady entered then press enter)",
+        default: localStorage.getItem("api_key"),
       },
       {
         type: "input",
@@ -40,23 +47,21 @@ program.command("init").option('-a, --api_key <api_key>', 'Set API Key').option(
     });
   });
 
-
-
-program.command('clear').action(() => {
+program.command("clear").action(() => {
   Inquirer.prompt([
     {
       type: "confirm",
       name: "delete",
-      message: "Do you want to delete the created files?"
-    }
+      message: "Do you want to delete the created files?",
+    },
   ]).then((answers) => {
     if (answers.delete) {
       clearFiles();
     }
   });
-})
+});
 
 program.command("test").action(() => {
   createFiles(nodeBasePrompt);
-})
+});
 program.parse(process.argv);

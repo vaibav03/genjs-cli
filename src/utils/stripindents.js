@@ -1,21 +1,21 @@
 export function stripIndents(value) {
-  if (typeof value === 'string') {
+  if (typeof value === "string") {
     return _stripIndents(value);
   }
 
   const processedString = value.reduce((acc, curr, i) => {
-    acc += curr + (arguments[i + 1] ?? '');
+    acc += curr + (arguments[i + 1] ?? "");
     return acc;
-  }, '');
+  }, "");
 
   return _stripIndents(processedString);
 }
 
 function _stripIndents(value) {
   return value
-    .split('\n')
+    .split("\n")
     .map((line) => line.trim())
-    .join('\n')
+    .join("\n")
     .trimStart()
-    .replace(/[\r\n]$/, '');
+    .replace(/[\r\n]$/, "");
 }
