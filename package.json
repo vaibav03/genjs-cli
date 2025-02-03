@@ -1,5 +1,5 @@
 {
-  "name": "cli-2improv",
+  "name": "genreact-node",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "genJS": "./src/index.js"
+    "genreact-node": "./src/index.js"
   },
   "author": "Vaibav",
   "license": "ISC",
@@ -26,7 +26,6 @@
     "ds": "^2.0.2",
     "fs": "^0.0.1-security",
     "inquirer": "^12.3.2",
-    "node-cache": "^5.1.2",
     "node-localstorage": "^3.0.5"
   }
 }
