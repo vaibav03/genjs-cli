@@ -1,4 +1,4 @@
-# genreact-node
+# genjs-cli
 
 `genreact-node` is a command-line tool that interacts with the [Anthropic API](https://www.anthropic.com/) to generate code templates based on custom prompts. This tool helps developers quickly create React and Node.js applications. With simple commands, you can initialize your project, set an API key, and clear previously generated files.
 
@@ -7,38 +7,32 @@
 ## Features
 
 - **Initialize Projects**: Set your API key and custom prompts to generate code templates.
-- **Clear Generated Files**: Easily remove any generated files with a simple command.
 - **Interact with the Anthropic API**: Use custom prompts to generate Node.js and React code.
-- **Modular and Extensible**: Easily extendable for additional templates and functionality.
+- **Persistent API Key**: The API key is saved in the local storage, so you don’t have to input it repeatedly.
+- **Interactivity**: During the `init` command, users are prompted for the API key and custom prompt if they haven't been set.
+- **File Clearing**: With `clear`, users can remove all generated files with a confirmation prompt.
+
 
 ---
 
 ## Installation
 
-To get started with `genreact-node`, follow these steps:
+To get started with `genjs-cli`, follow these steps:
 
-1. **Clone the repository** or download the latest release.
-2. **Install dependencies** using npm:
-
-    ```bash
-    npm install
-    ```
-
-3. **Link the command globally** to make it available in your terminal:
+1. **Install dependencies** using npm:
 
     ```bash
-    npm link
+    npm install genjs-cli
     ```
-
-After that, you can use the `genreact-node` command in your terminal.
-
 ---
 
 ## Usage
 
 ### `init` Command
 
-The `init` command initializes your project by setting the Anthropic API key and a custom prompt for code generation.
+Running `genjs-cli init` allows the user for setting up the API key and prompt interactively.
+
+
 
 #### Options:
 
@@ -48,4 +42,6 @@ The `init` command initializes your project by setting the Anthropic API key and
 #### Example:
 
 ```bash
-genreact-node init -a YOUR_API_KEY -p "Generate a React component that fetches data from an API"
+genjs-cli init -a YOUR_API_KEY -p "Generate a React component that fetches data from an API"
+
+
