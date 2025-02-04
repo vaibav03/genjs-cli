@@ -69,7 +69,7 @@ export function parseXml(response) {
 export const createFiles = (response) => {
   const steps = parseXml(response);
   const __dirname = new URL(process.cwd()).pathname;
-  const baseDir = path.join(__dirname, "test");
+  const baseDir = path.join(__dirname, "project");
 
   if (!fs.existsSync(baseDir)) {
     fs.mkdirSync(baseDir);

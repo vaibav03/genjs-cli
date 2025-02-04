@@ -1,5 +1,5 @@
 {
-  "name": "genreact-node",
+  "name": "genjs-cli",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "genreact-node": "./src/index.js"
+    "genjs-cli": "./src/index.js"
   },
   "author": "Vaibav",
   "license": "ISC",

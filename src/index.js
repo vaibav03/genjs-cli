@@ -11,7 +11,7 @@ import { basePrompt as reactBasePrompt } from "./utils/defaults/react.js";
 import { localStorage } from "./utils/functions.js";
 
 const program = new Command();
-program.name("genJS").version("1.0.0");
+program.name("genjs-cli").version("1.0.0");
 
 program
   .command("init")
@@ -61,7 +61,5 @@ program.command("clear").action(() => {
   });
 });
 
-program.command("test").action(() => {
-  createFiles(nodeBasePrompt);
-});
+
 program.parse(process.argv);
