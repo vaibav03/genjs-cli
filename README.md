@@ -32,6 +32,7 @@ To get started with `genjs-cli`, follow these steps:
 
 Running `genjs-cli init` allows the user for setting up the API key and prompt interactively.
 
+![Vaibav-readme](https://github.com/user-attachments/assets/67314c0d-6b04-48d6-9c3f-8d0afdcfb256)
 
 
 #### Options:
@@ -43,5 +44,14 @@ Running `genjs-cli init` allows the user for setting up the API key and prompt i
 
 ```bash
 genjs-cli init -a YOUR_API_KEY -p "Generate a React component that fetches data from an API"
+```
+
+### clear command:
+
+```bash
+genjs-cli clear
+```
+
+Clears all files in your directory 
 
 
