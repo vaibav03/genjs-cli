@@ -1,6 +1,6 @@
 # genjs-cli
 
-`genreact-node` is a command-line tool that interacts with the [Anthropic API](https://www.anthropic.com/) to generate code templates based on custom prompts. This tool helps developers quickly create React and Node.js applications. With simple commands, you can initialize your project, set an API key, and clear previously generated files.
+`genjs-cli` is a command-line tool that interacts with the [Anthropic API](https://www.anthropic.com/) to generate code templates based on custom prompts. This tool helps developers quickly create React and Node.js applications. With simple commands, you can initialize your project, set an API key, and clear previously generated files.
 
 ---
 
