@@ -92,7 +92,7 @@ export const createFiles = (response) => {
     } else if (step.type === "RunScript") {
       try {
         const command = step.code;
-        console.log(`Run command: ${command}`);
+        console.log(`\n Run command: ${command}`);
       } catch (error) {
         console.error(`Failed to execute script: ${error.message}`);
       }
