@@ -19,7 +19,7 @@
 
 To get started with `genjs-cli`, follow these steps:
 
-1. **Install dependencies** using npm:
+1. **Install dependencies** globally using npm:
 
     ```bash
     npm install genjs-cli -g
