@@ -26,6 +26,6 @@ jobs:
           registry-url: "https://registry.npmjs.org/"
           always-auth: true  # Ensures authentication is enforced
       - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-      - run: npm publish --access public
+      - run: npm version patch
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
