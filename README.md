@@ -22,7 +22,7 @@ To get started with `genjs-cli`, follow these steps:
 1. **Install dependencies** using npm:
 
     ```bash
-    npm install genjs-cli
+    npm install genjs-cli -g
     ```
 ---
 
@@ -30,7 +30,7 @@ To get started with `genjs-cli`, follow these steps:
 
 ### `init` Command
 
-Running `genjs-cli init` allows the user for setting up the API key and prompt interactively.
+Running `npx genjs-cli init` allows the user for setting up the API key and prompt interactively.
 
 ![Vaibav-readme](https://github.com/user-attachments/assets/67314c0d-6b04-48d6-9c3f-8d0afdcfb256)
 
@@ -43,13 +43,13 @@ Running `genjs-cli init` allows the user for setting up the API key and prompt i
 #### Example:
 
 ```bash
-genjs-cli init -a YOUR_API_KEY -p "Generate a React component that fetches data from an API"
+npx genjs-cli init -a YOUR_API_KEY -p "Generate a React component that fetches data from an API"
 ```
 
 ### clear command:
 
 ```bash
-genjs-cli clear
+npx genjs-cli clear
 ```
 
 Clears all files in your directory 
