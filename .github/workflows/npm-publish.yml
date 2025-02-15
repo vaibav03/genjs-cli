@@ -24,8 +24,11 @@ jobs:
         with:
           node-version: 20
           registry-url: "https://registry.npmjs.org/"
-          always-auth: true  # Ensures authentication is enforced
+          always-auth: true  
       - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+      - run: git config --global user.email "vvaibav03@gmail.com"
+      - run: git config --global user.name "vaibav03"
       - run: npm version patch
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
