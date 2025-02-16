@@ -1,6 +1,6 @@
 {
   "name": "genjs-cli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -10,9 +10,9 @@
   "bin": {
     "genjs-cli": "./src/index.js"
   },
-  "repository":{
-    "type":"git",
-    "url":"https://github.com/vaibav03/genjs-cli"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vaibav03/genjs-cli"
   },
   "author": "Vaibav",
   "license": "ISC",
